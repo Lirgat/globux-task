@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import SearchBar from './components/SearchBar/SearchBar';
+import UserCard from './components/UserCard/UserCard';
+import UserModal from './components/UserModal/UserModal';
+import useUsers from './hooks/useUsers';
+import type { User } from './types/type';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUser, setSelectedUser] = useState<null | User>(null);
+  const users = useUsers(searchTerm);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Box sx={{ maxWidth: 1200, margin: 'auto', padding: 3 }}>
+      <SearchBar searchTerm={searchTerm} onSearch={(term) => setSearchTerm(term)} />
 
-export default App
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: .5, alignItems: 'center', marginTop: 2 }}>
+        {users.map((user) => (
+          <UserCard key={user.id} user={user} onClick={() => setSelectedUser(user)} />
+        ))}
+      </Box>
+
+      {selectedUser && <UserModal user={selectedUser} onClose={() => setSelectedUser(null)} />}
+    </Box>
+  );
+};
+
+export default App;
