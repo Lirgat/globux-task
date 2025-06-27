@@ -9,8 +9,10 @@ const SearchBar:FC<SearchProps> = ({ searchTerm, onSearch }):JSX.Element => {
     <TextField
       value={searchTerm}
       onChange={(e) => onSearch(e.target.value)}
-      InputProps={{
-        endAdornment: <SearchIcon htmlColor='#432EAB'/>,
+      slotProps={{
+        input: {
+          endAdornment: <SearchIcon fontSize='large' htmlColor='#432EAB'/>,
+        }
       }}
       fullWidth
       sx={{
