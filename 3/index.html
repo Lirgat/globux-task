@@ -8,11 +8,14 @@
     <h1>Список сотрудников</h1>
     <pre>
         <%
-         personArray = XQuery("for $elem in collaborators
-          return $elem/fullname
-         ")
+        personArray = XQuery("for $elem in collaborators return $elem/fullname");
+        
+        output = "";
+        for (var i = 0; i < personArray.length; i++) {
+            output += personArray[i] + "\n";
+        }
         %>
-        <%= personArray.join("\n") %>
+        <div style="text-align: start;"><%= output %></div>
     </pre>
 </body>
 </html>
