@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список сотрудников</title>
+</head>
+<body>
+    <h1>Список сотрудников</h1>
+    <pre>
+        <%
+         personArray = XQuery("for $elem in collaborators
+          return $elem/fullname
+         ")
+        %>
+        <%= personArray.join("\n") %>
+    </pre>
+</body>
+</html>
